@@ -22,6 +22,10 @@ default: &default
 development:
   <<: *default
   database: podiobridge_development
+  username: user
+  password: password
+  host: localhost
+
 
 test:
   <<: *default
