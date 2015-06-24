@@ -8,8 +8,10 @@
     = csrf_meta_tags
   %body
     .navbar.navbar-default
-      .navar-header
+      .navbar-header
         = link_to "PodioBridge", root_path, class: "navbar-brand"
-        - if session[:admin]
-          = link_to "Logout", logout_path
+      .collapse.navbar-collapse
+        %ul.nav.navbar-nav.navbar-right
+          - if session[:admin]
+            = link_to "Logout", logout_path, method: :delete, class: "btn btn-danger btn-xs"
     = yield

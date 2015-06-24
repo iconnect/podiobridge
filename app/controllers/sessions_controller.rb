@@ -6,12 +6,11 @@ class SessionsController < ApplicationController
   end
 
   def create
-    # binding.pry
     session[:admin] = params[:password] == ENV["ADMIN_PASSWORD"]
     redirect_to root_path
   end
 
-  def logout
+  def delete
     session[:admin] = false
     redirect_to login_path
   end
