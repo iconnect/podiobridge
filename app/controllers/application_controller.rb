@@ -10,6 +10,7 @@ class ApplicationController < ActionController::Base
     redirect_to login_path unless is_admin?
   end
 
+  helper_method :is_admin?
   def is_admin?
     session[:admin]
   end
