@@ -10,4 +10,6 @@
     .navbar.navbar-default
       .navar-header
         = link_to "PodioBridge", root_path, class: "navbar-brand"
+        - if session[:admin]
+          = link_to "Logout", logout_path
     = yield
