@@ -11,8 +11,9 @@
       .navbar-header
         = link_to "PodioBridge", root_path, class: "navbar-brand"
       .collapse.navbar-collapse
-        %ul.nav.navbar-nav.navbar-right
-          - if is_admin?
+        - if is_admin?
+          = link_to "Logs", logs_path, class: "navbar-brand"
+          %ul.nav.navbar-nav.navbar-right
             = link_to "Logout", logout_path, method: :delete, class: "btn btn-danger btn-xs"
     .container
       = yield

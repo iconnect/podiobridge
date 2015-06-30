@@ -1,5 +1,8 @@
 %h1 Logs
 
 - @logs.each do |log|
-  .alert.alert-info
+  .alert{ class: "alert-" + log.status }
+    = "[" + time_ago_in_words(log.created_at) + "]"
+    = log.sender + " : "
     = log.message
+
