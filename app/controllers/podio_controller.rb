@@ -5,7 +5,7 @@ class PodioController < ApplicationController
   def create
     Log.create(
       sender: "PodioController", 
-      message: "Username: #{params[:username]} - Password: #{params[:password]}",
+      message: params
       status: "success"
       )
     render nothing: true, status: 200
