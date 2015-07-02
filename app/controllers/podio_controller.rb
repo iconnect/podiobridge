@@ -3,9 +3,11 @@ class PodioController < ApplicationController
   skip_before_action :require_login, only: [:create]
 
   def create
+    PodioAdapter.new
+    comment = Podio::Comment.find(params[:comment_id])
     Log.create(
       sender: "PodioController", 
-      message: "Username: #{params[:username]} - Password: #{params[:password]}",
+      message: comment.value,
       status: "success"
       )
     render nothing: true, status: 200

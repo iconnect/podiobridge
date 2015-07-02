@@ -1,0 +1,1 @@
+PodioAdapter.new

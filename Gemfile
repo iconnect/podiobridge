@@ -29,7 +29,7 @@ gem 'rails_12factor', group: :production
 
 gem 'haml-rails'
 
-
+gem 'podio'
 
 
 # Use ActiveModel has_secure_password
@@ -52,6 +52,8 @@ group :development, :test do
   gem 'spring'
 
   gem 'pry-byebug'
+
+  gem 'awesome_print'
 
 end
 
