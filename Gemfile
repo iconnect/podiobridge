@@ -31,6 +31,7 @@ gem 'haml-rails'
 
 gem 'podio'
 
+gem 'hipchat'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

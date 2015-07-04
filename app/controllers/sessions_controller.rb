@@ -21,6 +21,7 @@ class SessionsController < ApplicationController
 
   def log(message, status)
     Log.create(sender: "SessionsController", message: message, status: status)
+    HipChatAdapter.new.send_message_to_podio_management(message)
   end
 
 end
