@@ -22,7 +22,7 @@ default: &default
 development:
   <<: *default
   database: podiobridge_development
-  username: rainer
+  username: <%= ENV['PB_PG_DEVUSER'] %>
   password:
   host: localhost
 
