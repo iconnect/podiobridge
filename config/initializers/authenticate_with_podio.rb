@@ -1,1 +1,1 @@
-# PodioAdapter.new
+PodioAdapter.new
