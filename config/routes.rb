@@ -8,5 +8,6 @@ Rails.application.routes.draw do
  get "/logs", to: "logs#index"
 
  post "/podio", to: "podio#create"
+ post "/github", to: "github#create"
  
 end
