@@ -4,12 +4,12 @@ class GithubController < ApplicationController
 
   def create
     # binding.pry
+    GithubAdapter.new.extract_issue(params)
     Log.create(
       sender: "GithubController", 
       message: params[:github][:action],
       status: "success"
       )
-    GithubAdapter.new.extract_issue(params)
     render nothing: true, status: 200
   end
 
