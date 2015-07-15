@@ -14,7 +14,6 @@ class GithubAdapter
   end
 
   def extract_issue(params)
-    # binding.pry
     params[:issue][:body] = nil if params[:issue][:body].empty?
     params[:issue][:assignee] = { login: nil } unless params[:issue][:assignee]
     item_hash = {
@@ -25,16 +24,7 @@ class GithubAdapter
       state: params[:issue][:state],
       "github-id" => params[:issue][:number].to_s
     }
-
-    # podio related stuff
-    PodioAdapter.new
-    action = params[:github][:action]
-    if action == "opened"
-      Podio::Item.create(12885408, fields: item_hash)
-    else
-      items = Podio::Item.find_by_filter_values("12885408", "github-id" => params[:issue][:number].to_s).first
-      Podio::Item.update(items.first[:item_id], fields: item_hash)
-    end
+    return item_hash
 
   end
 

@@ -3,8 +3,22 @@ class GithubController < ApplicationController
   skip_before_action :require_login, only: [:create]
 
   def create
-    # binding.pry
-    GithubAdapter.new.extract_issue(params)
+    ga = GithubAdapter.new
+    item_hash = ga.extract_issue(params)
+
+    pa = PodioAdapter.new
+ 
+    action = params[:github][:action]
+    if action == "opened"
+      pa.create_item(12885408, item_hash)
+    elsif action == "created"
+        
+    else
+      item = pa.find_item(12885408, "github-id", params[:issue][:number].to_s)
+      pa.update_item(item.item_id, item_hash)
+    end
+
+
     Log.create(
       sender: "GithubController", 
       message: params[:github][:action],
