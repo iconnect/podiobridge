@@ -18,7 +18,9 @@ class PodioAdapter
   end
 
   def create_item(app_id, item_hash)
+    binding.pry
     result = Podio::Item.create(app_id, fields: item_hash)
+    binding.pry
     Log.create(
       sender: "PodioAdapter", 
       message: "Created item: #{result.item_id}",
@@ -28,12 +30,16 @@ class PodioAdapter
   end
 
   def update_item(item_id, item_hash)
-    result = Podio::Item.update(item_id, fields: item_hash)
+    Podio::Item.update(item_id, fields: item_hash)
     Log.create(
       sender: "PodioAdapter", 
       message: "Updated item: #{item_id}",
       status: "success"
       )
+  end
+
+  def find_item(app_id, field_id, value)
+    result = Podio::Item.find_by_filter_values(app_id, field_id => value).first.first
     return result
   end
 
