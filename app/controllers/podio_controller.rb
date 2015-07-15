@@ -4,7 +4,7 @@ class PodioController < ApplicationController
 
   def create
     pa = PodioAdapter.new
-    pa.verify_hook(params[:hook_id], params[:code]) and render nothing: true, status: 200 if params[:type] == "hook.verify"
+    pa.verify_hook(params[:hook_id], params[:code]) if params[:type] == "hook.verify"
     
     # comment = Podio::Comment.find(params[:comment_id])
     # Log.create(
