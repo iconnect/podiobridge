@@ -21,7 +21,7 @@ class PodioAdapter
     result = Podio::Item.create(app_id, fields: item_hash)
     Log.create(
       sender: "PodioAdapter", 
-      message: "Created item",
+      message: "Created item: #{result.item_id}",
       status: "success"
       )
     return result
@@ -31,33 +31,10 @@ class PodioAdapter
     result = Podio::Item.update(item_id, fields: item_hash)
     Log.create(
       sender: "PodioAdapter", 
-      message: "Created item",
+      message: "Updated item: #{item_id}",
       status: "success"
       )
     return result
-  end
-
-  def extract_issue(params)
-    params[:issue][:body] = nil if params[:issue][:body].empty?
-    params[:issue][:assignee] = { login: nil } unless params[:issue][:assignee]
-    item_hash = {
-      title: params[:issue][:title],
-      body: params[:issue][:body],
-      assignee: params[:issue][:assignee][:login],
-      "created-by" => params[:issue][:user][:login],
-      state: params[:issue][:state],
-      "github-id" => params[:issue][:number].to_s
-    }
-    # return item_hash
-
-    PodioAdapter.new
-    action = params[:github][:action]
-    if action == "opened"
-      Podio::Item.create(12885408, fields: item_hash)
-    else
-      items = Podio::Item.find_by_filter_values("12885408", "github-id" => params[:issue][:number].to_s).first
-      Podio::Item.update(items.first[:item_id], fields: item_hash)
-    end
   end
 
 end
