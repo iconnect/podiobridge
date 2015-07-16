@@ -1,17 +1,33 @@
 class GithubAdapter
   
-  USER = "t-c-k"
-  REPO = "podiobridge"
+  attr_accessor :client, :user, :repo
 
-  attr_accessor :client
-
-  def initialize
+  def initialize(user, repo)
     @client = Github.new basic_auth: "podiobridge:"+ENV["PB_GITHUB_API"]
+    @user = user
+    @repo = repo
   end
 
-  def create_issue(title, body)
-    client.issues.create user: USER, repo: REPO, title: title, body: body
+  def create_issue(item_hash)
+    result = client.issues.create user: user, repo: repo, title: item_hash[:title], body: item_hash[:body]
+    Log.create(
+      sender: "GithubAdapter", 
+      message: "Created item: #{result.number}",
+      status: "success"
+      )
+    return result
   end
+
+  def update_issue(issue_id, item_hash)
+    client.issues.edit user: user, repo: repo, number: issue_id, title: item_hash[:title], body: item_hash[:body], state: item_hash[:state]
+    Log.create(
+      sender: "GithubAdapter", 
+      message: "Updated item: #{issue_id}",
+      status: "success"
+      )
+  end
+
+
 
   def extract_issue(params)
     params[:issue][:body] = nil if params[:issue][:body].empty?

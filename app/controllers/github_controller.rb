@@ -8,17 +8,17 @@ class GithubController < ApplicationController
       message: params[:github][:action],
       status: "info"
       )
-    ga = GithubAdapter.new
-    item_hash = ga.extract_issue(params)
     pa = PodioAdapter.new
+    item_hash = Issue.new(params).github_to_hash
+
     action = params[:github][:action]
+    podio_item = pa.find_item(12885408, "github-id", params[:issue][:number].to_s)
     if action == "opened"
-      pa.create_item(12885408, item_hash)
+      pa.create_item(12885408, item_hash) unless podio_item
     elsif action == "created"
       #comment created
     else
-      item = pa.find_item(12885408, "github-id", params[:issue][:number].to_s)
-      pa.update_item(item.item_id, item_hash)
+      pa.update_item(podio_item.item_id, item_hash)
     end
     render nothing: true, status: 200
   end
