@@ -22,7 +22,7 @@ class PodioController < ApplicationController
     when "comment.create"
       # comment = Podio::Comment.find(params[:comment_id])
     when "hook.verify"
-      pa.verify_hook(params[:hook_id], params[:code]) if params[:type]
+      pa.verify_hook(params[:hook_id], params[:code])
     end
 
     render nothing: true, status: 200
