@@ -27,21 +27,4 @@ class GithubAdapter
       )
   end
 
-
-
-  def extract_issue(params)
-    params[:issue][:body] = nil if params[:issue][:body].empty?
-    params[:issue][:assignee] = { login: nil } unless params[:issue][:assignee]
-    item_hash = {
-      title: params[:issue][:title],
-      body: params[:issue][:body],
-      assignee: params[:issue][:assignee][:login],
-      "created-by" => params[:issue][:user][:login],
-      state: params[:issue][:state],
-      "github-id" => params[:issue][:number].to_s
-    }
-    return item_hash
-
-  end
-
 end
