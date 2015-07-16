@@ -28,10 +28,7 @@ class Issue
     # created_by = field("created-by").value
     state = field("state").value["text"]
     github_id = field("github-id").value
-  
-    i = field("title").value
-
-
+ 
     state ||= nil
     github_id ||= nil
 
@@ -52,6 +49,7 @@ class Issue
 
   class Field < OpenStruct
     def value
+      return nil if values.blank?
       values.map { |x| x["value"] }.first
     end
 
