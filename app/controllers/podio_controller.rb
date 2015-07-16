@@ -16,7 +16,7 @@ class PodioController < ApplicationController
     case action
     when "item.create"
       result = ga.create_issue(item_hash)
-      pa.update_item(params[:item_id], { hook: false, "github-id" => result[:number].to_s } )
+      pa.update_item(params[:item_id], { "github-id" => result[:number].to_s } )
     when "item.update"
       ga.update_issue(item_hash["github-id"], item_hash)
     when "comment.create"

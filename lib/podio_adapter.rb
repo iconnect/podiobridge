@@ -17,8 +17,8 @@ class PodioAdapter
     return result
   end
 
-  def create_item(app_id, item_hash)
-    result = Podio::Item.create(app_id, fields: item_hash )
+  def create_item(app_id, item_hash, hook = false)
+    result = Podio::Item.create( app_id, fields: item_hash, hook: hook )
     Log.create(
       sender: "PodioAdapter", 
       message: "Created item: #{result.item_id}",
@@ -27,8 +27,8 @@ class PodioAdapter
     return result
   end
 
-  def update_item(item_id, item_hash)
-    Podio::Item.update(item_id, { hook: false }, fields: item_hash )
+  def update_item(item_id, item_hash, hook = false)
+    Podio::Item.update( item_id, fields: item_hash, hook: hook )
     Log.create(
       sender: "PodioAdapter", 
       message: "Updated item: #{item_id}",
