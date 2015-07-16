@@ -13,13 +13,16 @@ class GithubController < ApplicationController
 
     action = params[:github][:action]
     podio_item = pa.find_item(12885408, "github-id", params[:issue][:number].to_s)
-    if action == "opened"
+
+    case action
+    when "opened"
       pa.create_item(12885408, item_hash) unless podio_item
-    elsif action == "created"
+    when "created"
       #comment created
     else
       pa.update_item(podio_item.item_id, item_hash)
     end
+
     render nothing: true, status: 200
   end
 

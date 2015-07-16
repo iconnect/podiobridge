@@ -12,14 +12,19 @@ class PodioController < ApplicationController
     item_hash = Issue.new(pa.get_item(params[:item_id])).podio_to_hash
     ga = GithubAdapter.new("t-c-k", "podiobridge")
     action = params[:type]
-    if action == "item.create"
+
+    case action
+    when "item.create"
       result = ga.create_issue(item_hash)
       pa.update_item(params[:item_id], { hook: false, "github-id" => result[:number].to_s } )
-    elsif action == "item.update"
+    when "item.update"
       ga.update_issue(item_hash["github-id"], item_hash)
+    when "comment.create"
+      # comment = Podio::Comment.find(params[:comment_id])
+    when "hook.verify"
+      pa.verify_hook(params[:hook_id], params[:code]) if params[:type]
     end
-    # comment = Podio::Comment.find(params[:comment_id])
-    pa.verify_hook(params[:hook_id], params[:code]) if params[:type] == "hook.verify"
+
     render nothing: true, status: 200
   end
 
