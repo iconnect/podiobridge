@@ -9,7 +9,7 @@ class PodioController < ApplicationController
       status: "info"
       )
     pa = PodioAdapter.new
-    item_hash = Issue.new(pa.get_item(params[:item_id])).podio_to_hash
+    item_hash = Issue.new(pa.get_item(params[:item_id])).podio_to_hash if params[:item_id]
     ga = GithubAdapter.new("t-c-k", "podiobridge")
     action = params[:type]
 
