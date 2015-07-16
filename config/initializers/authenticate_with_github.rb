@@ -1,1 +1,1 @@
-GITHUB = GithubAdapter.new
+# GITHUB = GithubAdapter.new
