@@ -22,7 +22,6 @@ class Issue
   end
 
   def podio_to_hash
-    binding.pry
     title = field("title").value
     body = field("body").value
     # assignee = field("assignee").value
