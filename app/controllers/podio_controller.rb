@@ -8,17 +8,19 @@ class PodioController < ApplicationController
       message: params[:type],
       status: "info"
       )
+
     pa = PodioAdapter.new
-    item_hash = Issue.new(pa.get_item(params[:item_id])).podio_to_hash if params[:item_id]
+    podio_item = pa.get_item(params[:item_id])
+    render nothing: true, status: 200 and return if podio_item[:revisions].first["created_by"]["name"] == "Support Requests"
+
+    item_hash = Issue.new(podio_item).podio_to_hash if params[:item_id]
     ga = GithubAdapter.new("t-c-k", "podiobridge")
     action = params[:type]
 
     case action
     when "item.create"
-      unless item_hash["github-id"].blank?
-        result = ga.create_issue(item_hash)
-        pa.update_item(params[:item_id], { "github-id" => result[:number].to_s } )
-      end      
+      result = ga.create_issue(item_hash)
+      pa.update_item(params[:item_id], { "github-id" => result[:number].to_s } )
     when "item.update"
       ga.update_issue(item_hash["github-id"], item_hash)
     when "comment.create"
