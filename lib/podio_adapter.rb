@@ -37,13 +37,11 @@ class PodioAdapter
   end
 
   def get_item(item_id)
-    result = Podio::Item.find(item_id)
-    return result
+    Podio::Item.find(item_id)
   end
 
   def find_item(app_id, field_id, value)
-    result = Podio::Item.find_by_filter_values(app_id, field_id => value).first.first
-    return result
+    Podio::Item.find_by_filter_values(app_id, field_id => value).first.first
   end
 
 end
