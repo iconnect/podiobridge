@@ -15,7 +15,8 @@ class PodioController < ApplicationController
 
     case action
     when "item.create"
-      unless result["github-id"].blank?
+      binding.pry
+      unless item_hash["github-id"].blank?
         result = ga.create_issue(item_hash)
         pa.update_item(params[:item_id], { "github-id" => result[:number].to_s } )
       end      
