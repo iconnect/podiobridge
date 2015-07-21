@@ -50,7 +50,7 @@ class PodioToGithub
   end
 
   def comment_by_podiobridge?
-    podio_item.created_by.name == "Support Requests"
+    podio_comment.created_by.name == "Support Requests"
   end
 
   def create_issue
@@ -67,7 +67,7 @@ class PodioToGithub
   def create_comment
     return if comment_by_podiobridge?
     body = "#{podio_comment.created_by.name}:\n---\n#{podio_comment.value}"
-    github.create_comment(item_hash["github-id"], podio_comment[:value])
+    github.create_comment(item_hash["github-id"], body)
   end
 
   def verify_hook

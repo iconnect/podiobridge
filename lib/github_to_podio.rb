@@ -19,6 +19,10 @@ class GithubToPodio
 
   private
 
+  def action
+    github_params[:github][:action]
+  end
+
   def podio
     @podio ||= PodioAdapter.new
   end
@@ -31,8 +35,8 @@ class GithubToPodio
     @item_hash ||= Issue.new(github_params).github_to_hash
   end
 
-  def action
-    github_params[:github][:action]
+  def comment_by_podiobridge?
+    github_params["comment"]["user"]["login"] == "podiobridge"
   end
 
   def create_issue
@@ -40,6 +44,7 @@ class GithubToPodio
   end
 
   def create_comment
+    return if comment_by_podiobridge?
     body = "#{github_params["comment"]["user"]["login"]}:\n---\n#{github_params["comment"]["body"]}"
     podio.create_comment(podio_item.id, body)
   end
