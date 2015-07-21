@@ -27,4 +27,13 @@ class GithubAdapter
       )
   end
 
+  def create_comment(issue_id, comment_body)
+    result = client.issues.comments.create user: user, repo: repo, number: issue_id, body: comment_body
+    Log.create(
+      sender: "GithubAdapter", 
+      message: "Created comment: #{result.id} on #{issue_id}",
+      status: "success"
+      )
+  end
+
 end

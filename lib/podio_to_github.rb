@@ -21,6 +21,10 @@ class PodioToGithub
 
   private
 
+  def action
+    podio_params[:type]
+  end
+
   def podio
     @podio ||= PodioAdapter.new
   end
@@ -37,12 +41,16 @@ class PodioToGithub
     @podio_item ||= podio.get_item(podio_params[:item_id])
   end
 
-  def created_by_podiobridge?
-    podio_item[:revisions].first["created_by"]["name"] == "Support Requests"
+  def podio_comment
+    @podio_comment ||= podio.get_comment(podio_params[:comment_id])
   end
 
-  def action
-    podio_params[:type]
+  def created_by_podiobridge?
+    podio_item.revisions.first["created_by"]["name"] == "Support Requests"
+  end
+
+  def comment_by_podiobridge?
+    podio_comment.created_by.name == "Support Requests"
   end
 
   def create_issue
@@ -57,7 +65,9 @@ class PodioToGithub
   end
 
   def create_comment
-    #comment created
+    return if comment_by_podiobridge?
+    body = "#{podio_comment.created_by.name}:\n---\n#{podio_comment.value}"
+    github.create_comment(item_hash["github-id"], body)
   end
 
   def verify_hook
