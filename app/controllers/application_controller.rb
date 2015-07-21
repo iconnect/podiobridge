@@ -15,5 +15,4 @@ class ApplicationController < ActionController::Base
     session[:admin]
   end
 
-
 end
