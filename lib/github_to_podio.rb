@@ -23,6 +23,10 @@ class GithubToPodio
     @podio ||= PodioAdapter.new
   end
 
+  def podio_item
+    @podio_item ||= podio_item = podio.find_item(12885408, "github-id", github_params[:issue][:number].to_s)
+  end
+
   def item_hash
     @item_hash ||= Issue.new(github_params).github_to_hash
   end
@@ -36,11 +40,11 @@ class GithubToPodio
   end
 
   def create_comment
-    #comment created
+    body = "#{github_params["comment"]["user"]["login"]}:\n---\n#{github_params["comment"]["body"]}"
+    podio.create_comment(podio_item.id, body)
   end
 
   def update_issue
-    podio_item = podio.find_item(12885408, "github-id", github_params[:issue][:number].to_s)
     podio.update_item(podio_item.item_id, item_hash)
   end
 
