@@ -45,4 +45,17 @@ class PodioAdapter
     Podio::Item.find_by_filter_values(app_id, field_id => value).first.first
   end
 
+  def create_comment(item_id, comment_body)
+    result = Podio::Comment.create("item", item_id, {value: comment_body})
+    Log.create(
+      sender: "PodioAdapter", 
+      message: "Created comment: #{result["comment_id"]} on #{item_id}",
+      status: "success"
+      )
+  end
+
+  def get_comment(comment_id)
+    Podio::Comment.find(comment_id)
+  end
+
 end
