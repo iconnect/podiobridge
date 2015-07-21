@@ -18,25 +18,21 @@ class Issue
       "github-id" => item[:issue][:number].to_s
     }
     return item_hash
-
   end
 
   def podio_to_hash
     title = field("title").value
     body = field("body").value
-    # assignee = field("assignee").value
-    # created_by = field("created-by").value
+    assignee = field("assignee").value
+    created_by = field("created-by").value
     state = field("state").value["text"]
     github_id = field("github-id").value
- 
-    state ||= nil
-    github_id ||= nil
 
     item_hash = {
       title: title,
       body: body,
-      # assignee: assignee,
-      # "created-by" => created_by,
+      assignee: assignee,
+      "created-by" => created_by,
       state: state,
       "github-id" => github_id
     }
@@ -52,7 +48,6 @@ class Issue
       return nil if values.blank?
       values.map { |x| x["value"] }.first
     end
-
   end
 
 end
