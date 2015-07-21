@@ -17,6 +17,8 @@ class GithubToPodio
     end
   end
 
+  private
+
   def podio
     @podio ||= PodioAdapter.new
   end
@@ -24,8 +26,6 @@ class GithubToPodio
   def item_hash
     @item_hash ||= Issue.new(github_params).github_to_hash
   end
-
-  private
 
   def action
     github_params[:github][:action]
@@ -43,8 +43,5 @@ class GithubToPodio
     podio_item = podio.find_item(12885408, "github-id", github_params[:issue][:number].to_s)
     podio.update_item(podio_item.item_id, item_hash)
   end
-
-
-
 
 end

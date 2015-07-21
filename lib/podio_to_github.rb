@@ -19,6 +19,8 @@ class PodioToGithub
     end
   end
 
+  private
+
   def podio
     @podio ||= PodioAdapter.new
   end
@@ -38,8 +40,6 @@ class PodioToGithub
   def created_by_podiobridge?
     podio_item[:revisions].first["created_by"]["name"] == "Support Requests"
   end
-
-  private
 
   def action
     podio_params[:type]
