@@ -28,7 +28,7 @@ class GithubToPodio
   end
 
   def podio_item
-    @podio_item ||= podio_item = podio.find_item(12885408, "github-id", github_params[:issue][:number].to_s)
+    @podio_item ||= podio_item = podio.find_item(podio_app_id, "github-id", github_params[:issue][:number].to_s)
   end
 
   def item_hash
@@ -40,7 +40,7 @@ class GithubToPodio
   end
 
   def create_issue
-    podio.create_item(12885408, item_hash)
+    podio.create_item(podio_app_id, item_hash)
   end
 
   def create_comment
@@ -51,6 +51,10 @@ class GithubToPodio
 
   def update_issue
     podio.update_item(podio_item.item_id, item_hash)
+  end
+
+  def podio_app_id
+    ENV["PB_PODIO_APP_ID"]
   end
 
 end

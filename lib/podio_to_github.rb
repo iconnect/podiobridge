@@ -30,7 +30,7 @@ class PodioToGithub
   end
 
   def github
-    @github ||= GithubAdapter.new("t-c-k", "podiobridge")
+    @github ||= GithubAdapter.new(ENV["PB_GITHUB_USER"], ENV["PB_GITHUB_REPO"])
   end
 
   def item_hash
@@ -46,7 +46,7 @@ class PodioToGithub
   end
 
   def created_by_podiobridge?
-    podio_item.revisions.first["created_by"]["name"] == "Support Requests"
+    podio_item.revisions.first[:created_by][:name] == "Support Requests"
   end
 
   def comment_by_podiobridge?
