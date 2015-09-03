@@ -67,6 +67,7 @@ class PodioToGithub
   def create_comment
     return if comment_by_podiobridge?
     body = "#### #{podio_comment.created_by.name}:\r\n<hr/>\r\n#{podio_comment.value}"
+    body.gsub! "@", "@ "
     github.create_comment(item_hash["github-id"], body)
   end
 

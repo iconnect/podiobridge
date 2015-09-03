@@ -28,6 +28,7 @@ class Issue
     state = field("state").value["text"]
     github_id = field("github-id").value
     body += "\r\n<hr/>\r\nCreated by: #{item.created_by.name}\r\n#{item.link}"
+    body.gsub! "@", "@ "
     item_hash = {
       title: title,
       body: body,
