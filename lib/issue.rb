@@ -27,7 +27,7 @@ class Issue
     created_by = field("created-by").value
     state = field("state").value["text"]
     github_id = field("github-id").value
-
+    body += "\r\n<hr/>\r\nCreated by: #{item.created_by.name}\r\n#{item.link}"
     item_hash = {
       title: title,
       body: body,
