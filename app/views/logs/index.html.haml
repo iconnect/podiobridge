@@ -5,4 +5,7 @@
     = "[" + time_ago_in_words(log.created_at) + "]"
     = log.sender + " : "
     = log.message
-
+%br
+%p.show-all
+  = link_to "Show All", logs_path, per_page: 10000
+%br
