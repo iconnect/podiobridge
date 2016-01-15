@@ -1,5 +1,5 @@
 class PodioToGithub
-  
+
   attr_accessor :podio_params
 
   def initialize(podio_params)
@@ -46,11 +46,11 @@ class PodioToGithub
   end
 
   def created_by_podiobridge?
-    podio_item.revisions.first[:created_by][:name] == "Support Requests"
+    podio_item.revisions.first[:created_by][:name] == "Git Hub Bridge"
   end
 
   def comment_by_podiobridge?
-    podio_comment.created_by.name == "Support Requests"
+    podio_comment.created_by.name == "Git Hub Bridge"
   end
 
   def create_issue

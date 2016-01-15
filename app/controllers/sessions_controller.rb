@@ -7,20 +7,20 @@ class SessionsController < ApplicationController
 
   def create
     session[:admin] = params[:password] == ENV["ADMIN_PASSWORD"]
-    log("Admin has logged in", "info") if is_admin?
+    # log("Admin has logged in", "info") if is_admin?
     redirect_to root_path
   end
 
   def delete
     session[:admin] = false
-    log("Admin has logged out", "info")
+    # log("Admin has logged out", "info")
     redirect_to login_path
   end
 
   private
 
   def log(message, status)
-    Log.create(sender: "SessionsController", message: message, status: status)
+    # Log.create(sender: "SessionsController", message: message, status: status)
     HipChatAdapter.new.send_message_to_podio_management(message)
   end
 
